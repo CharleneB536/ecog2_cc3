@@ -1,0 +1,9 @@
+---
+title: "cc3_data-import"
+output: html_document
+---
+
+```{bash}
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR298/006/SRR2983316/SRR2983316.fastq.gz
+```
+
