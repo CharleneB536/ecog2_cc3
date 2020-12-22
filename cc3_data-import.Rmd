@@ -224,6 +224,8 @@ wget ftp.sra.ebi.ac.uk/vol1/fastq/SRR398/000/SRR3986800/SRR3986800_2.fastq.gz
 wget ftp.sra.ebi.ac.uk/vol1/fastq/SRR398/001/SRR3986801/SRR3986801_2.fastq.gz 
 wget ftp.sra.ebi.ac.uk/vol1/fastq/SRR398/002/SRR3986802/SRR3986802_2.fastq.gz 
 wget ftp.sra.ebi.ac.uk/vol1/fastq/SRR398/003/SRR3986803/SRR3986803_2.fastq.gz 
+```
+```{bash}
 wget ftp.sra.ebi.ac.uk/vol1/fastq/SRR398/004/SRR3986804/SRR3986804_2.fastq.gz 
 wget ftp.sra.ebi.ac.uk/vol1/fastq/SRR398/005/SRR3986805/SRR3986805_2.fastq.gz 
 wget ftp.sra.ebi.ac.uk/vol1/fastq/SRR398/006/SRR3986806/SRR3986806_2.fastq.gz 
