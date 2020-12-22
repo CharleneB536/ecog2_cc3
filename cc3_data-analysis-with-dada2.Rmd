@@ -1,0 +1,38 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Analyse des données de l'article avec DADA2
+
+## Appel des packages
+
+```{r}
+library(Rcpp)
+library(dada2)
+```
+
+
+```{r}
+path <- "~/ecog2_cc3/Données" # CHANGE ME to the directory containing the fastq files after unzipping.
+list.files(path)
+```
+
+
+```{r}
+fnFs <- sort(list.files(path, pattern="1.fastq.gz", full.names = TRUE))
+fnRs <- sort(list.files(path, pattern="2.fastq.gz", full.names = TRUE))
+```
+
+```{r}
+sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
+```
+
+```{r}
+plotQualityProfile(fnFs[1])
+```
+
+```{r}
+plotQualityProfile(fnRs[1])
+```
+
