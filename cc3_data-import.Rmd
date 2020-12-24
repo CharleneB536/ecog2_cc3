@@ -3,6 +3,8 @@ title: "cc3_data-import"
 output: html_document
 ---
 
+# Importation des données de l'article
+
 ```{bash}
 wget ftp.sra.ebi.ac.uk/vol1/fastq/SRR398/005/SRR3986695/SRR3986695_1.fastq.gz
 wget ftp.sra.ebi.ac.uk/vol1/fastq/SRR398/006/SRR3986696/SRR3986696_1.fastq.gz
