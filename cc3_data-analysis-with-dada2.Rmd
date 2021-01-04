@@ -1,9 +1,9 @@
 ---
-title: "R Notebook"
+title: "UE Ecogénomique 1 - CC3"
 output: html_notebook
 ---
 
-# Analyse des données de l'article avec DADA2
+# Analyse des données de l'article avec DADA2 : Illumina MiSeq 16S amplicon sequence analysis of bovine respiratory disease associated bacteria in lung and mediastinal lymph node tissue
 
 ## Appel des packages
 
@@ -12,23 +12,28 @@ library(Rcpp)
 library(dada2)
 ```
 
-## Definition du chemin de travail
+## Filtrer et couper
 
 ```{r}
 path <- "~/ecog2_cc3/cc3_données" # CHANGE ME to the directory containing the fastq files after unzipping.
 list.files(path)
 ```
-## Création des objets fnFs et fnRs
+
+Les fichiers fastq.gz sont rangés dans le chemin ~/ecog2_cc3/cc3_données et sont placés dans l'objet path
+
 
 ```{r}
 fnFs <- sort(list.files(path, pattern="1.fastq.gz", full.names = TRUE))
 fnRs <- sort(list.files(path, pattern="2.fastq.gz", full.names = TRUE))
 ```
 
+Les reads 1 (1.fastq.gz) et les reads 2 (2.fastq.gz) sont filtrés dans les fichiers fnFs et FnRs, respectivement.
 
 ```{r}
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 ```
+
+Les fichiers fnFs sont renommés.
 
 ```{r}
 plotQualityProfile(fnFs[1])
@@ -37,6 +42,25 @@ plotQualityProfile(fnFs[1])
 ```{r}
 plotQualityProfile(fnRs[1])
 ```
-En utilisant la fonction plotquality profile on peut voir le profil qualité des forwards et reverse. On peut voir en abscisse le nombre de cycles et en ordonnées le score qualité des amorces. La ligne orange représente la longueur de chaque read et la ligne verte représente le score de qualité moyen. On peut voir que le score qualité est plus faible pour les reverse. 
+En utilisant la fonction plotQualityProfile, le profil qualité peut être tracé et visualisé des reads forward puis reverse. 
 
+On peut voir en abscisses la position des paires de bases dans un read (entre 0 et 250 pb) et en ordonnées le score qualité des reads. La ligne orange représente la longueur de chaque read et la ligne verte représente le score de qualité moyen par position de nucléotides. 
 
+On peut voir que le score qualité décroit et passe en dessous de Q30 aux alentours de la 180ème paire de base pour le R1 par exemple. On peut constater également que le score de qualité est plus faible pour les reads reverse. 
+
+```{r}
+filtFs <- file.path(path, "filtered", paste0(sample.names, "_1.fastq.gz"))
+filtRs <- file.path(path, "filtered", paste0(sample.names, "_2.fastq.gz"))
+names(filtFs) <- sample.names
+names(filtRs) <- sample.names
+```
+
+On assigne ensuite les fichiers filtrés aux listes filFs pour les read forward et filtRs pour les reads reverse en modifiant leurs noms.
+
+```{r}
+out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, maxN=0,
+maxEE=c(2,2), rm.phix=TRUE, compress=TRUE, multithread=TRUE)
+head(out)
+```
+
+Les reads forward et rever sont filtrés grâce à la fonction filterandTrim. D'après l'article, les chercheurs ont choisi de filtrer à partir de Q20 et non pas à Q30. Ainsi, la fonction Trunclen n'est pas utilisée dans ce cas (comme lors des cc1 et cc2) car les 250 paires de bases des reads forward et reverse ne sont pas modifiés. La fonction maxEE=cc(2,2) permet de définir le nombre d'erreurs maximum attendues dans une lecture (1 erreur toutes les 100 paires de bases en moyenne). MaxN=0 va permettre d'éliminer les bases dans lesquelles "N" est présent puisqu'il correspond soit aux bases A,T,G et C dans un read. rm.phix correspond à un contrôle par l'ajout d'un génome de virus PhiX dans  chaque run. 
