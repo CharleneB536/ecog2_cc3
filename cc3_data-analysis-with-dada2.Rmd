@@ -72,4 +72,10 @@ La valeur de reads.in qui est obtenue représente le nombre de reads initial et 
 errF <- learnErrors(filtFs, multithread=TRUE)
 ```
 
-La fonction learnErrors va permettre de générer un algorithme mathématique à partir du dossier de filtration réalisé.  
+
+```{r}
+errR <- learnErrors(filtRs, multithread=TRUE)
+```
+
+
+La fonction learnErrors va permettre de générer un algorithme à partir du dossier de filtration réalisé. Cet algorithme va "apprendre" les erreurs des reads forward et reverse afin de créer un modèle d'erreur capable de corriger les reads. Le fichier errF est ainsi obtenu avec les reads forward et le fichier errR est obtenu avec les reads reverse.
