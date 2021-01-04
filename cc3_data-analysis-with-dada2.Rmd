@@ -12,17 +12,19 @@ library(Rcpp)
 library(dada2)
 ```
 
+## Definition du chemin de travail
 
 ```{r}
-path <- "~/ecog2_cc3/Données" # CHANGE ME to the directory containing the fastq files after unzipping.
+path <- "~/ecog2_cc3/cc3_données" # CHANGE ME to the directory containing the fastq files after unzipping.
 list.files(path)
 ```
-
+## Création des objets fnFs et fnRs
 
 ```{r}
 fnFs <- sort(list.files(path, pattern="1.fastq.gz", full.names = TRUE))
 fnRs <- sort(list.files(path, pattern="2.fastq.gz", full.names = TRUE))
 ```
+
 
 ```{r}
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
@@ -35,4 +37,6 @@ plotQualityProfile(fnFs[1])
 ```{r}
 plotQualityProfile(fnRs[1])
 ```
+En utilisant la fonction plotquality profile on peut voir le profil qualité des forwards et reverse. On peut voir en abscisse le nombre de cycles et en ordonnées le score qualité des amorces. La ligne orange représente la longueur de chaque read et la ligne verte représente le score de qualité moyen. On peut voir que le score qualité est plus faible pour les reverse. 
+
 
