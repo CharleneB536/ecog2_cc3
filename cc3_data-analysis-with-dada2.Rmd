@@ -63,4 +63,13 @@ maxEE=c(2,2), rm.phix=TRUE, compress=TRUE, multithread=TRUE)
 head(out)
 ```
 
-Les reads forward et rever sont filtrés grâce à la fonction filterandTrim. D'après l'article, les chercheurs ont choisi de filtrer à partir de Q20 et non pas à Q30. Ainsi, la fonction Trunclen n'est pas utilisée dans ce cas (comme lors des cc1 et cc2) car les 250 paires de bases des reads forward et reverse ne sont pas modifiés. La fonction maxEE=cc(2,2) permet de définir le nombre d'erreurs maximum attendues dans une lecture (1 erreur toutes les 100 paires de bases en moyenne). MaxN=0 va permettre d'éliminer les bases dans lesquelles "N" est présent puisqu'il correspond soit aux bases A,T,G et C dans un read. rm.phix correspond à un contrôle par l'ajout d'un génome de virus PhiX dans  chaque run. 
+Les reads forward et reverse sont filtrés grâce à la fonction filterandTrim. D'après l'article, les chercheurs ont choisi de filtrer à partir de Q20 et non pas à Q30. Ainsi, la fonction Trunclen n'est pas utilisée dans ce cas (comme lors des cc1 et cc2) car les 250 paires de bases des reads forward et reverse ne sont pas modifiés. La fonction maxEE=cc(2,2) permet de définir le nombre d'erreurs maximum attendues dans une lecture (1 erreur toutes les 100 paires de bases en moyenne). MaxN=0 va permettre d'éliminer les bases dans lesquelles "N" est présent puisqu'il correspond soit aux bases A,T,G et C dans un read. rm.phix correspond à un contrôle par l'ajout d'un génome de virus PhiX dans  chaque run. 
+
+La valeur de reads.in qui est obtenue représente le nombre de reads initial et reads.out représente le nombre de reads suite au filtrage qualité.
+
+
+```{r}
+errF <- learnErrors(filtFs, multithread=TRUE)
+```
+
+La fonction learnErrors va permettre de générer un algorithme mathématique à partir du dossier de filtration réalisé.  
